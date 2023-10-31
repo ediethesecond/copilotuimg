@@ -46,6 +46,7 @@ interface HealthDetail {
   desc: string;
   lastUpdated: string;
   action: JSX.Element;
+  priority: string;
 }
 
 
@@ -103,7 +104,8 @@ export const Default = () => {
               icon: getIcon(detail.status),
               desc: detail.desc,
               lastUpdated: detail.ago,
-              action: getButton(detail.canMitigate)
+              action: getButton(detail.canMitigate),
+              priority: detail.status
             };
           });
 
@@ -241,7 +243,12 @@ export const Default = () => {
               {config_item.name}
             </div>
             {config_item.healthDetails.map((item) => (
-                          <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                          <div style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            borderBottom: item.priority === "alert" ? "2px solid red" : "none"
+                          }}>
                             <div style={{ display: "flex", alignItems: "center", textAlign: "left" }}>
                             <div style={{ minWidth: "25px" }}>{item.icon}</div>
                               <div >{item.desc} {item.lastUpdated}</div>
@@ -267,22 +274,27 @@ export const Default = () => {
               {config_item.name}
             </div>
             {config_item.healthDetails.map((item) => (
-                          <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                          <div style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            borderBottom: item.priority === "alert" ? "2px solid red" : "none"
+                          }}>
                             <div style={{ display: "flex", alignItems: "center", textAlign: "left" }}>
-                            <div style={{ minWidth: "25px" }}>{item.icon}</div>
+                              <div style={{ minWidth: "25px" }}>{item.icon}</div>
                               <div >{item.desc} {item.lastUpdated}</div>
                             </div>
                             <div style={{ display: "flex", justifyContent: "flex-end" }}>
                               <div>{item.action}</div>
                             </div>
-                        </div>
+                          </div>
 
             ))} 
           </Card>
         )))}
       </div>
     </div>
-    <Dialog         open={open}
+    <Dialog style={{minWidth: '1000px'}} open={open}
         onOpenChange={(event: any, data: { open: boolean | ((prevState: boolean) => boolean); }) => {
           // it is the users responsibility to react accordingly to the open state change
           setOpen(data.open);
@@ -299,9 +311,8 @@ export const Default = () => {
           </DialogContent>
           <DialogActions>
             <DialogTrigger disableButtonEnhancement>
-              <Button appearance="secondary">Close</Button>
+              <Button appearance="primary">Close</Button>
             </DialogTrigger>
-            <Button appearance="primary">Do Something</Button>
           </DialogActions>
         </DialogBody>
       </DialogSurface>
