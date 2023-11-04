@@ -237,7 +237,7 @@ export const Default = () => {
       <div style={{ flex: 1 }}>
       {configurationItems.map((config_item) => (
         // Only render the card if config.unHealthy is true
-        config_item.isHealthy && (
+        config_item.isHealthy === false && (
           <Card key={config_item.name}>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
               {config_item.name}
@@ -268,7 +268,7 @@ export const Default = () => {
       <div style={{ flex: 1 }}>
       {configurationItems.map((config_item) => (
         // Only render the card if config.unHealthy is true
-        config_item.isHealthy === false && (
+        config_item.isHealthy && (
           <Card key={config_item.name}>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
               {config_item.name}
